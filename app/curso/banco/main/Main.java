@@ -1,7 +1,5 @@
 package app.curso.banco.main;
 
-import java.util.HashMap;
-
 import app.curso.banco.entidad.Cliente;
 
 public class Main {
@@ -13,13 +11,25 @@ public class Main {
 		c1.abrirCuenta("ES123", 500f);
 		
 		c1.mostrarInfo();
-	
+		
+		c1.ingresarDinero("ES123", 500f);
+		
+		c1.mostrarInfo();
+		
+		c1.retirarDinero("ES123", 500f);
+		
+		c1.mostrarInfo();
+		
+		c1.retirarDinero("ES123", 500f);
+		
+		c1.mostrarInfo();
+		
 		Cliente c2 = new Cliente();
 		
 		c2.setId(3);
 		
-		HashMap<String,Float> cuentas = new HashMap<>();
-		c2.setCuentas(cuentas);
+		c2.abrirCuenta("ES124", 500f);
+		c2.mostrarInfo();
 	}
 
 }

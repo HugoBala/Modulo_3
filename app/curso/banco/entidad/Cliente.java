@@ -17,7 +17,7 @@ public class Cliente extends Persona{
 	}
 
 	public Cliente() {
-		
+		this.cuentas = new HashMap<>();
 	}
 	
 	public Cliente(int i, String nombre, String telefono, float totalDinero) {
@@ -61,8 +61,9 @@ public class Cliente extends Persona{
 		if(dineroEnCuenta != null) {
 			this.cuentas.put(idCuenta, dineroEnCuenta + dinero);
 			this.ingresarDinero(dinero);
+			System.out.println("Has ingresado :" + dinero + " fondos correctamente a la cuenta.");
 		}else {
-			System.out.println("La cuenta no existe");
+			System.out.println("La cuenta facilitada no existe.");
 		}
 		return this.totalDinero;
 	}
@@ -70,14 +71,15 @@ public class Cliente extends Persona{
 	public float retirarDinero(String idCuenta, Float dinero) {
 		Float dineroEnCuenta = this.cuentas.get(idCuenta);
 		if(dineroEnCuenta != null) {
-			if(dineroEnCuenta > dinero) {
+			if(dineroEnCuenta >= dinero) {
 				this.cuentas.put(idCuenta, dineroEnCuenta - dinero);
-				this.retirarDinero(dinero);			
+				this.retirarDinero(dinero);
+				System.out.println("Has retirado :" + dinero + " fondos correctamente a la cuenta.");
 			}else {
 				System.out.println("ERROR: La cuenta no posee suficientes fondos.");
 			}
 		}else {
-			System.out.println("La cuenta no existe");
+			System.out.println("La cuenta facilitada no existe.");
 		}
 		return this.totalDinero;
 	}
@@ -86,6 +88,7 @@ public class Cliente extends Persona{
 		Float dineroEnCuenta = this.cuentas.get(idCuenta);
 		retirarDinero(idCuenta, dineroEnCuenta);
 		this.cuentas.remove(idCuenta);
+		System.out.println("Has eliminado correctamente tu cuenta y retirado :" + dineroEnCuenta + " de la cuenta.");
 	}
 	
 	public void mostrarCuentas() {
