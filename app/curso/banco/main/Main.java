@@ -1,7 +1,8 @@
 package app.curso.banco.main;
 
+import java.util.HashMap;
+
 import app.curso.banco.entidad.Cliente;
-import app.curso.banco.entidad.Gestor;
 
 public class Main {
 
@@ -9,18 +10,16 @@ public class Main {
 		
 		Cliente c1 = new Cliente(1, "Paco", "(+34) 777 666 222", 0);
 		
+		c1.abrirCuenta("ES123", 500f);
+		
 		c1.mostrarInfo();
+	
+		Cliente c2 = new Cliente();
 		
-		c1.ingresarDinero(10);
-		c1.mostrarInfo();
+		c2.setId(3);
 		
-		c1.retirarDinero(6);
-		c1.mostrarInfo();
-		
-		
-		Gestor g1 = new Gestor(2, "Ana", "(+34) 777 666 111", 3);
-		g1.mostrarInfo();
-
+		HashMap<String,Float> cuentas = new HashMap<>();
+		c2.setCuentas(cuentas);
 	}
 
 }
