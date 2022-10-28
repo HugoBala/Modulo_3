@@ -128,6 +128,53 @@ public class ConsolaBanco {
 			break;
 			
 			case 5:
+				System.out.println("Indique el id del gestor que quiera actualizar: ");
+				int idActualizar = keyboard.nextInt();
+				Gestor gestorBuscado4 = utiles.buscarGestor(idActualizar, gestores);
+				
+				while (gestorBuscado4 == null) {
+					System.out.println("Este gestor no existe, por favor indique otro.");
+					idActualizar = keyboard.nextInt();
+					
+					gestorBuscado4 = utiles.buscarGestor(idActualizar, gestores);
+				}
+				
+				
+
+				System.out.println("Escriba el nuevo ID de Oficina o pulse 0 para continuar :");
+							
+				int newIdOficina = keyboard.nextInt();
+				
+				if(newIdOficina == 0) {
+					newIdOficina = gestorBuscado4.getIdOficina();
+				}
+				
+				System.out.println("Escriba el nuevo nombre (Sin el Apellido) del gestor o pulse X para continuar :");
+				String newNombre = keyboard.next();
+				
+				if(newNombre == "X") {
+					newNombre = gestorBuscado4.getName();
+				}
+				
+				System.out.println("Escriba el nuevo apellido (Sin el Nombre) del gestor o pulse X para continuar :");
+				String newApellido = keyboard.next();
+				
+				if(newApellido != "X") {
+					newNombre = newNombre+' '+newApellido;
+				}
+				
+				System.out.println("Estableza el nuevo telefono del Gestor o pulse 0 para continuar :");
+				String newTelefono = keyboard.next();
+				
+				if(newTelefono == "X") {
+					newTelefono = gestorBuscado4.getPhone();
+				}
+				
+				gestorBuscado4 = new Gestor(gestorBuscado4.getId(), newNombre, newTelefono, newIdOficina);
+				
+				gestores.replace(idActualizar, gestorBuscado4);
+				
+				System.out.println("Has actualizado el Gestor con éxito");
 		
 			break;
 				
@@ -135,14 +182,14 @@ public class ConsolaBanco {
 				System.out.println("Indique el id del gestor que quiera eliminar: ");
 				int idEliminar = keyboard.nextInt();
 				
-				Gestor gestorBuscado4 = utiles.buscarGestor(idEliminar, gestores);
+				Gestor gestorBuscado5 = utiles.buscarGestor(idEliminar, gestores);
 					
 
-				while (gestorBuscado4 == null) {
+				while (gestorBuscado5 == null) {
 					System.out.println("Este gestor no existe, por favor indique otro.");
 					idEliminar = keyboard.nextInt();
 					
-					gestorBuscado4 = utiles.buscarGestor(idEliminar, gestores);
+					gestorBuscado5 = utiles.buscarGestor(idEliminar, gestores);
 				}
 				
 				gestores.remove(idEliminar);
