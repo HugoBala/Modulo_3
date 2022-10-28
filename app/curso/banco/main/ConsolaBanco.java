@@ -196,6 +196,11 @@ public class ConsolaBanco {
 				System.out.println("Gestor eliminado correctamente");
 
 			break;
+			
+			case 7:
+				
+				
+			break;
 				}	
 			}while (opcion != 0);
 		
