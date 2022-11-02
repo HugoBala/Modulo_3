@@ -30,16 +30,7 @@ public class Mensaje {
 		this.idReceptor = idReceptor;
 		this.textoMensaje = textoMensaje;
 	}
-	
-	public void mostrarInfo () {
-		System.out.println("Id mensaje: " + this.id + "\n");
-		System.out.println("Tipo emisor: " + this.tipoEmisor + "\n");
-		System.out.println("Id emisor: " + this.idEmisor + "\n");
-		System.out.println("Tipo receptor: " + this.tipoReceptor + "\n");
-		System.out.println("Id receptor: " + this.idReceptor + "\n");
-		System.out.println("Mensaje: " + this.textoMensaje + "\n");
-	}
-	
+
 	
 	public int getId() {
 		return id;

@@ -34,7 +34,8 @@ public class utiles{
 			"15. Obtención de una transferencia.",
 			"16. Obtención de todas las trasferencias",
 			"17. Envío de una transferencia.",
-			"18. Login y registro."
+			"18. Registro",
+			"19. Login"
 	};
 	
 

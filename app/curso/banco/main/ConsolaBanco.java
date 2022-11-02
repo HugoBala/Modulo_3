@@ -4,9 +4,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Random;
 
-import app.curso.banco.entidad.Cliente;
-import app.curso.banco.entidad.Gestor;
-import app.curso.banco.entidad.Mensaje;
+import app.curso.banco.entidad.*;
+
 import app.curso.banco.util.utiles;
 
 public class ConsolaBanco {
@@ -17,6 +16,7 @@ public class ConsolaBanco {
 		HashMap<Integer, Gestor> gestores = new HashMap<>();
 		HashMap<Integer, Cliente> clientes = new HashMap<>();
 		HashMap<Integer, Mensaje> mensajes = new HashMap<>();
+		HashMap<Integer, Transferencia> transferencias = new HashMap<>();
 		
 		String[] nombres = utiles.NOMBRES;
 		String[] apellidos = utiles.APELLIDOS;
@@ -27,7 +27,7 @@ public class ConsolaBanco {
 		
 		do {
 			
-			for(int i = 0; i<18; i++) {	
+			for(int i = 0; i<20; i++) {	
 				System.out.println(utiles.MENU[i]);
 			}
 			
@@ -124,6 +124,11 @@ public class ConsolaBanco {
 			break;
 			
 			case 4:
+				
+				if(gestores.isEmpty()) {
+					System.out.println("No hay ningún gestor todavía");
+					break;
+				}
 				gestores.forEach((idx, Gestor) -> {
 					System.out.println("\nGestor: \n");
 					Gestor.mostrarInfo();
@@ -255,6 +260,11 @@ public class ConsolaBanco {
 			
 			case 9:
 				
+				if(clientes.isEmpty()) {
+					System.out.println("No hay ningún cliente todavía");
+					break;
+				}
+				
 				clientes.forEach((idx, Cliente) -> {
 					System.out.println("\nCliente: \n");
 					Cliente.mostrarInfo();
@@ -342,14 +352,19 @@ public class ConsolaBanco {
 					mensajeBuscado12 = utiles.buscarMensaje(idMensajeBuscado, mensajes);
 				}
 				
-				mensajeBuscado12.mostrarInfo();
+				System.out.println(mensajeBuscado12.toString());
 			break;
 			
 			case 13:
 				
+				if(mensajes.isEmpty()) {
+					System.out.println("No hay ningún mensaje todavía");
+					break;
+				}
+				
 				mensajes.forEach((idx, Mensaje) -> {
 					System.out.println("\nMensaje: \n");
-					Mensaje.mostrarInfo();
+					System.out.println(Mensaje.toString());
 				});
 				
 			break;
@@ -499,6 +514,64 @@ public class ConsolaBanco {
 			break;
 				
 			case 18:
+				
+				System.out.println("Registro de Cliente");
+				
+				System.out.println("Ingrese el id del cliente existente para crear una cuenta");
+				
+				int idClienteRegistro = keyboard.nextInt();
+				
+				Cliente clienteBuscadoRegistro = utiles.buscarCliente(idClienteRegistro, clientes);
+				
+				while(clienteBuscadoRegistro == null) {
+					System.out.println("El cliente con id " + idClienteRegistro + " no existe, pruebe de nuevo");
+					 idClienteRegistro = keyboard.nextInt();
+					 clienteBuscadoRegistro = utiles.buscarCliente(idClienteRegistro, clientes);
+				}
+				
+				System.out.println("Cree una Contraseña: ");
+				String pass = keyboard.next();
+				
+				clienteBuscadoRegistro.setPassword(pass);
+				
+				clientes.put(idClienteRegistro, clienteBuscadoRegistro);
+				System.out.println("Usuario creado correctamente.\n");
+				
+				break;
+				
+			case 19:
+				
+				
+				System.out.println("Ingrese el id del cliente para LOGIN");
+				
+				int idClienteLogin = keyboard.nextInt();
+				
+				Cliente clienteBuscadoLogin = utiles.buscarCliente(idClienteLogin, clientes);
+				
+				
+				System.out.println("Ingrese la Contraseña: ");
+				String pass2 = keyboard.next();
+				
+				if(clienteBuscadoLogin == null) {
+					System.out.println("No existe ningún usuario con ese id");
+					break;
+				}
+				
+				boolean tienePass = clienteBuscadoLogin.getPassword() != null;
+				
+				if(tienePass == false) {
+					System.out.println("El usuario con id " + clienteBuscadoLogin.getId() + " no está registrado");
+					break;
+				}
+				
+				boolean loginCorrecto = clienteBuscadoLogin.getPassword().equals(pass2);
+								
+				if(loginCorrecto) {
+					System.out.println("Login correcto");
+				}else {					
+					System.out.println("Login incorrecto");
+				}
+				
 			break;
 			
 			

@@ -5,7 +5,10 @@ public class Persona {
 	protected int id;
 	protected String name;
 	protected String phone;
+	protected String password;
 	
+	
+
 	Persona(){
 		
 	}
@@ -45,7 +48,15 @@ public class Persona {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	
 	
 
