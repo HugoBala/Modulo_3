@@ -6,6 +6,7 @@ import java.util.Random;
 
 import app.curso.banco.entidad.Cliente;
 import app.curso.banco.entidad.Gestor;
+import app.curso.banco.entidad.Mensaje;
 import app.curso.banco.util.utiles;
 
 public class ConsolaBanco {
@@ -15,6 +16,7 @@ public class ConsolaBanco {
 		
 		HashMap<Integer, Gestor> gestores = new HashMap<>();
 		HashMap<Integer, Cliente> clientes = new HashMap<>();
+		HashMap<Integer, Mensaje> mensajes = new HashMap<>();
 		
 		String[] nombres = utiles.NOMBRES;
 		String[] apellidos = utiles.APELLIDOS;
@@ -33,6 +35,7 @@ public class ConsolaBanco {
 			opcion = keyboard.nextInt();
 			switch(opcion) {
 			case 1:
+				System.out.println("Inserción de un Gestor.\n");
 				System.out.println("Genere una ID aceptable :");
 				
 				
@@ -141,32 +144,33 @@ public class ConsolaBanco {
 				
 				
 
-				System.out.println("Escriba el nuevo ID de Oficina o pulse 0 para continuar :");
+				System.out.println("Escriba el nuevo ID de Oficina o pulse 001 para continuar :");
 							
 				int newIdOficina = keyboard.nextInt();
 				
-				if(newIdOficina == 0) {
+				if(newIdOficina == 001) {
 					newIdOficina = gestorBuscado4.getIdOficina();
 				}
 				
 				System.out.println("Escriba el nuevo nombre (Sin el Apellido) del gestor o pulse X para continuar :");
 				String newNombre = keyboard.next();
 				
-				if(newNombre == "X") {
+				if(newNombre.equals("X")) {
 					newNombre = gestorBuscado4.getName();
-				}
-				
-				System.out.println("Escriba el nuevo apellido (Sin el Nombre) del gestor o pulse X para continuar :");
-				String newApellido = keyboard.next();
-				
-				if(newApellido != "X") {
+				}else {
+					
+					System.out.println("Escriba el nuevo apellido (Sin el Nombre) del gestor: ");
+					String newApellido = keyboard.next();
+					
 					newNombre = newNombre+' '+newApellido;
 				}
 				
-				System.out.println("Estableza el nuevo telefono del Gestor o pulse 0 para continuar :");
+				
+				
+				System.out.println("Estableza el nuevo telefono del Gestor o pulse X para continuar :");
 				String newTelefono = keyboard.next();
 				
-				if(newTelefono == "X") {
+				if(newTelefono.equals("X")) {
 					newTelefono = gestorBuscado4.getPhone();
 				}
 				
@@ -198,9 +202,306 @@ public class ConsolaBanco {
 			break;
 			
 			case 7:
+				System.out.println("Inserción de un Cliente.\n");
+				System.out.println("Genere una ID aceptable :");
+				
+				
+				int idCliente = keyboard.nextInt();
+				
+				Cliente clienteExiste = utiles.buscarCliente(idCliente, clientes);
+				
+				while(clienteExiste!= null) {
+					System.out.println("El Id ya existe, ingrese otro por favor");
+					idCliente = keyboard.nextInt();
+					clienteExiste = utiles.buscarCliente(idCliente, clientes);
+				}
+
+				System.out.println("Estableza el nombre del Cliente: ");
+				String nombreCliente = keyboard.next();
+				System.out.println("Estableza el telefono del Cliente: ");
+				String telefonoCliente = keyboard.next();
+				System.out.println("Estableza la cantidad del dinero total:");
+				int dineroTotal = keyboard.nextInt();
+				
+				
+				Cliente c1 = new Cliente(idCliente, nombreCliente, telefonoCliente, dineroTotal);
+				clientes.put(idCliente, c1);
+				System.out.println("Cliente ingresado correctamente.");
 				
 				
 			break;
+			
+			case 8:
+				
+				System.out.println("Indique el id del cliente: ");
+				int idClienteBuscado = keyboard.nextInt();
+				
+				
+				Cliente clienteBuscado = utiles.buscarCliente(idClienteBuscado, clientes);
+					
+
+				while (clienteBuscado == null) {
+					System.out.println("Este cliente no existe, por favor indique otro.");
+					idClienteBuscado = keyboard.nextInt();
+					
+					clienteBuscado = utiles.buscarCliente(idClienteBuscado, clientes);
+				}
+				
+				System.out.println("Información del cliente buscado: \n");
+				clienteBuscado.mostrarInfo();
+				
+				
+			break;
+			
+			case 9:
+				
+				clientes.forEach((idx, Cliente) -> {
+					System.out.println("\nCliente: \n");
+					Cliente.mostrarInfo();
+				});
+				
+			break;
+			
+			case 10:
+				
+				System.out.println("Indique el id del cliente que quiera actualizar: ");
+				int idClienteActualizar = keyboard.nextInt();
+				Cliente clienteBuscado2 = utiles.buscarCliente(idClienteActualizar, clientes);
+				
+				while (clienteBuscado2 == null) {
+					System.out.println("Este cliente no existe, por favor indique otro.");
+					idClienteActualizar = keyboard.nextInt();
+					
+					clienteBuscado2 = utiles.buscarCliente(idClienteActualizar, clientes);
+				}
+				
+				
+				System.out.println("Escriba el nuevo nombre (Sin el Apellido) del cliente o pulse X para continuar :");
+				String newNombreCliente = keyboard.next();
+				
+				if(newNombreCliente.equals("X") ) {
+					System.out.println("entra");
+					newNombreCliente = clienteBuscado2.getName();
+				}
+								
+				System.out.println("Estableza el nuevo telefono del cliente o pulse X para continuar :");
+				String newTelefonoCliente = keyboard.next();
+				
+				if(newTelefonoCliente.equals("X")) {
+					newTelefonoCliente = clienteBuscado2.getPhone();
+				}
+				
+				System.out.println("Establezcla la cantidad total de dinero del cliente o pulse 001 para continuar: \n");
+				float newCantidadDineroTotal = keyboard.nextInt();
+				
+				if(newCantidadDineroTotal == 001) {
+					newCantidadDineroTotal = clienteBuscado2.getTotalDinero();
+				}
+				
+				clienteBuscado2 = new Cliente(clienteBuscado2.getId(), newNombreCliente, newTelefonoCliente, newCantidadDineroTotal);
+				
+				clientes.replace(idClienteActualizar, clienteBuscado2);
+				
+				System.out.println("Has actualizado el cliente con éxito \n");
+				
+			break;
+			
+			case 11:
+				
+				System.out.println("Indique el id del cliente que quiera eliminar: ");
+				int idClienteEliminar = keyboard.nextInt();
+				
+				Cliente clienteBuscado3 = utiles.buscarCliente(idClienteEliminar, clientes);
+					
+
+				while (clienteBuscado3 == null) {
+					System.out.println("Este cliente no existe, por favor indique otro.");
+					idClienteEliminar = keyboard.nextInt();
+					
+					clienteBuscado3 = utiles.buscarCliente(idClienteEliminar, clientes);
+				}
+				
+				clientes.remove(idClienteEliminar);
+				System.out.println("Cliente eliminado correctamente\n");
+				
+			break;
+			
+			case 12:	
+				
+				System.out.println("Indique el id del mensaje a buscar: ");
+				int idMensajeBuscado = keyboard.nextInt();
+				
+				
+				Mensaje mensajeBuscado12 = utiles.buscarMensaje(idMensajeBuscado, mensajes);
+					
+
+				while (mensajeBuscado12 == null) {
+					System.out.println("Este mensaje no existe, por favor indique otro.");
+					idMensajeBuscado = keyboard.nextInt();
+					
+					mensajeBuscado12 = utiles.buscarMensaje(idMensajeBuscado, mensajes);
+				}
+				
+				mensajeBuscado12.mostrarInfo();
+			break;
+			
+			case 13:
+				
+				mensajes.forEach((idx, Mensaje) -> {
+					System.out.println("\nMensaje: \n");
+					Mensaje.mostrarInfo();
+				});
+				
+			break;
+				
+			case 14:
+				
+				System.out.println("Envío de un mensaje.\n");
+				
+				System.out.println("Establezca el id de mensaje: ");
+				int idMensaje = keyboard.nextInt();
+				
+				Mensaje mensajeExiste= utiles.buscarMensaje(idMensaje, mensajes);
+				
+				while(mensajeExiste!= null) {
+					System.out.println("El Id ya existe, ingrese otro por favor");
+					idMensaje = keyboard.nextInt();
+					mensajeExiste= utiles.buscarMensaje(idMensaje, mensajes);
+				}
+				
+								
+				System.out.println("Establezca el tipo de emisor (\"c\" para cliente o \"g\" para gestor): ");
+				String tipoEmisor = keyboard.next();
+				
+				boolean tipoEmisorCorrect = false;
+				
+				if (tipoEmisor.equals("g")) {
+					tipoEmisorCorrect = true;
+				}
+				if (tipoEmisor.equals("c")) {
+					tipoEmisorCorrect = true;
+				}				
+				
+				while(tipoEmisorCorrect == false) {
+					
+					System.out.println("El tipo de emisor tiene que ser \"c\" para cliente o \"g\" para gestor, ingreselo de nuevo");
+					tipoEmisor = keyboard.next();
+					
+					if (tipoEmisor.equals("g")) {
+						tipoEmisorCorrect = true;
+					}
+					if (tipoEmisor.equals("c")) {
+						tipoEmisorCorrect = true;
+					}
+				}
+					
+				System.out.println("Establezca el id del emisor: ");
+				int idEmisor = keyboard.nextInt();
+				
+				if(tipoEmisor.equals("g")) {
+					
+					Gestor gestorBuscado6 = utiles.buscarGestor(idEmisor, gestores);
+					
+					
+					while (gestorBuscado6 == null) {
+						System.out.println("Este gestor no existe, por favor indique otro.");
+						idEmisor = keyboard.nextInt();
+						
+						gestorBuscado6 = utiles.buscarGestor(idEmisor, gestores);
+					}
+				}else {
+					
+					Cliente clienteBuscado4 = utiles.buscarCliente(idEmisor, clientes);
+					
+					
+					while (clienteBuscado4 == null) {
+						System.out.println("Este cliente no existe, por favor indique otro.");
+						idEmisor = keyboard.nextInt();
+						
+						clienteBuscado4 = utiles.buscarCliente(idEmisor, clientes);
+					}
+				}
+				
+
+				
+				
+				
+				System.out.println("Establezca el tipo de receptor (\"c\" para cliente y \"g\" para gestor): ");
+				String tipoReceptor = keyboard.next();
+				
+				boolean tipoReceptorCorrect = false;
+				
+				if (tipoReceptor.equals("g")) {
+					tipoReceptorCorrect = true;
+				}
+				if (tipoReceptor.equals("c")) {
+					tipoReceptorCorrect = true;
+				}
+				
+				
+				while(tipoReceptorCorrect == false) {
+					
+					System.out.println("El tipo de receptor tiene que ser \"c\" para cliente o \"g\" para gestor, ingreselo de nuevo");
+					tipoReceptor = keyboard.next();
+					
+					if (tipoReceptor.equals("g")) {
+						tipoReceptorCorrect = true;
+					}
+					if (tipoReceptor.equals("c")) {
+						tipoReceptorCorrect = true;
+					}
+				}
+				
+				System.out.println("Establezca el id del receptor: ");
+				int idReceptor = keyboard.nextInt();
+				
+				if(tipoReceptor.equals("g")) {
+					
+					Gestor gestorBuscado7 = utiles.buscarGestor(idReceptor, gestores);
+					
+					
+					while (gestorBuscado7 == null) {
+						System.out.println("Este gestor no existe, por favor indique otro.");
+						idReceptor = keyboard.nextInt();
+						
+						gestorBuscado7 = utiles.buscarGestor(idReceptor, gestores);
+					}
+				}else {
+					
+					Cliente clienteBuscado5 = utiles.buscarCliente(idReceptor, clientes);
+					
+					
+					while (clienteBuscado5 == null) {
+						System.out.println("Este cliente no existe, por favor indique otro.");
+						idReceptor = keyboard.nextInt();
+						
+						clienteBuscado5 = utiles.buscarCliente(idReceptor, clientes);
+					}
+				}
+				
+				//System.out.println("Escriba el mensaje asociado a la transferencia: ");
+				//String textoMensaje = keyboard.nextLine();
+								
+				Mensaje m1 = new Mensaje(idMensaje, tipoEmisor.charAt(0), idEmisor, tipoReceptor.charAt(0), idReceptor, "Sustituir por un mensaje de verdad");
+				mensajes.put(idMensaje, m1);
+				
+				System.out.println("Mensaje creado correctamente\n");
+				
+			break;
+				
+			case 15:
+			break;
+				
+			case 16:
+			break;
+				
+			case 17:
+			break;
+				
+			case 18:
+			break;
+			
+			
 				}	
 			}while (opcion != 0);
 		

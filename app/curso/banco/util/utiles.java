@@ -3,7 +3,9 @@ package app.curso.banco.util;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import app.curso.banco.entidad.Cliente;
 import app.curso.banco.entidad.Gestor;
+import app.curso.banco.entidad.Mensaje;
 
 public class utiles{
 	
@@ -44,7 +46,23 @@ public class utiles{
 		
 		
 		return GestorBuscado;
-
+	}
+	
+	
+	public static Cliente buscarCliente(int idBuscado, HashMap<Integer, Cliente> clientes) {
+		
+		Cliente ClienteBuscado = clientes.get(idBuscado);
+		
+		
+		return ClienteBuscado;
+	}
+	
+	public static Mensaje buscarMensaje(int idBuscado, HashMap<Integer, Mensaje> mensajes) {
+		
+		Mensaje MensajeBuscado = mensajes.get(idBuscado);
+		
+		
+		return MensajeBuscado;
 	}
 
 
