@@ -411,13 +411,13 @@ public class ConsolaBanco {
 					
 
 				while (transferenciaBuscada == null) {
-					System.out.println("Este mensaje no existe, por favor indique otro.");
-					idMensajeBuscado = keyboard.nextInt();
+					System.out.println("No existe una transferencia con ese id, pruebe con otra.");
+					idTransferenciaBuscada = keyboard.nextInt();
 					
-					mensajeBuscado12 = utiles.buscarMensaje(idMensajeBuscado, mensajes);
+					transferenciaBuscada = utiles.buscarTransferencia(idTransferenciaBuscada, transferencias);
 				}
 				
-				System.out.println(mensajeBuscado12.toString());
+				System.out.println(transferenciaBuscada.toString());
 			break;
 				
 			case 16:
