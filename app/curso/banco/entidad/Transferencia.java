@@ -28,7 +28,7 @@ public class Transferencia extends Mensaje{
 	public String toString() {
 		
 		String texto = super.toString();
-		texto += " Dinero: " + this.dinero + "€";
+		texto += ". Dinero transferido: " + this.dinero + "€";
 		
 		return texto;
 	}

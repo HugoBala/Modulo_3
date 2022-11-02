@@ -6,6 +6,7 @@ import java.util.Scanner;
 import app.curso.banco.entidad.Cliente;
 import app.curso.banco.entidad.Gestor;
 import app.curso.banco.entidad.Mensaje;
+import app.curso.banco.entidad.Transferencia;
 
 public class utiles{
 	
@@ -64,6 +65,14 @@ public class utiles{
 		
 		
 		return MensajeBuscado;
+	}
+	
+	public static Transferencia buscarTransferencia(int idBuscado, HashMap<Integer, Transferencia> transferencias) {
+		
+		Transferencia TransferenciaBuscada = transferencias.get(idBuscado);
+		
+		
+		return TransferenciaBuscada;
 	}
 
 

@@ -9,14 +9,16 @@ import app.curso.banco.entidad.*;
 import app.curso.banco.util.utiles;
 
 public class ConsolaBanco {
+	
+	
+	static HashMap<Integer, Gestor> gestores = new HashMap<>();
+	static HashMap<Integer, Cliente> clientes = new HashMap<>();
+	static HashMap<Integer, Mensaje> mensajes = new HashMap<>();
+	static HashMap<Integer, Transferencia> transferencias = new HashMap<>();
 
 	public static void main(String[] args) {
 		
-		
-		HashMap<Integer, Gestor> gestores = new HashMap<>();
-		HashMap<Integer, Cliente> clientes = new HashMap<>();
-		HashMap<Integer, Mensaje> mensajes = new HashMap<>();
-		HashMap<Integer, Transferencia> transferencias = new HashMap<>();
+			
 		
 		String[] nombres = utiles.NOMBRES;
 		String[] apellidos = utiles.APELLIDOS;
@@ -371,7 +373,7 @@ public class ConsolaBanco {
 				
 			case 14:
 				
-				System.out.println("Envío de un mensaje.\n");
+				System.out.println("Envío de un mensaje.\n\n");
 				
 				System.out.println("Establezca el id de mensaje: ");
 				int idMensaje = keyboard.nextInt();
@@ -384,120 +386,15 @@ public class ConsolaBanco {
 					mensajeExiste= utiles.buscarMensaje(idMensaje, mensajes);
 				}
 				
-								
-				System.out.println("Establezca el tipo de emisor (\"c\" para cliente o \"g\" para gestor): ");
-				String tipoEmisor = keyboard.next();
 				
-				boolean tipoEmisorCorrect = false;
+				HashMap<String, Object> propiedades = crearMsg();
 				
-				if (tipoEmisor.equals("g")) {
-					tipoEmisorCorrect = true;
-				}
-				if (tipoEmisor.equals("c")) {
-					tipoEmisorCorrect = true;
-				}				
+				Object tipoEmisor = propiedades.get("tipoEmisor");
+				Object idEmisor = propiedades.get("idEmisor");
+				Object tipoReceptor = propiedades.get("tipoReceptor");
+				Object idReceptor = propiedades.get("idReceptor");
 				
-				while(tipoEmisorCorrect == false) {
-					
-					System.out.println("El tipo de emisor tiene que ser \"c\" para cliente o \"g\" para gestor, ingreselo de nuevo");
-					tipoEmisor = keyboard.next();
-					
-					if (tipoEmisor.equals("g")) {
-						tipoEmisorCorrect = true;
-					}
-					if (tipoEmisor.equals("c")) {
-						tipoEmisorCorrect = true;
-					}
-				}
-					
-				System.out.println("Establezca el id del emisor: ");
-				int idEmisor = keyboard.nextInt();
-				
-				if(tipoEmisor.equals("g")) {
-					
-					Gestor gestorBuscado6 = utiles.buscarGestor(idEmisor, gestores);
-					
-					
-					while (gestorBuscado6 == null) {
-						System.out.println("Este gestor no existe, por favor indique otro.");
-						idEmisor = keyboard.nextInt();
-						
-						gestorBuscado6 = utiles.buscarGestor(idEmisor, gestores);
-					}
-				}else {
-					
-					Cliente clienteBuscado4 = utiles.buscarCliente(idEmisor, clientes);
-					
-					
-					while (clienteBuscado4 == null) {
-						System.out.println("Este cliente no existe, por favor indique otro.");
-						idEmisor = keyboard.nextInt();
-						
-						clienteBuscado4 = utiles.buscarCliente(idEmisor, clientes);
-					}
-				}
-				
-
-				
-				
-				
-				System.out.println("Establezca el tipo de receptor (\"c\" para cliente y \"g\" para gestor): ");
-				String tipoReceptor = keyboard.next();
-				
-				boolean tipoReceptorCorrect = false;
-				
-				if (tipoReceptor.equals("g")) {
-					tipoReceptorCorrect = true;
-				}
-				if (tipoReceptor.equals("c")) {
-					tipoReceptorCorrect = true;
-				}
-				
-				
-				while(tipoReceptorCorrect == false) {
-					
-					System.out.println("El tipo de receptor tiene que ser \"c\" para cliente o \"g\" para gestor, ingreselo de nuevo");
-					tipoReceptor = keyboard.next();
-					
-					if (tipoReceptor.equals("g")) {
-						tipoReceptorCorrect = true;
-					}
-					if (tipoReceptor.equals("c")) {
-						tipoReceptorCorrect = true;
-					}
-				}
-				
-				System.out.println("Establezca el id del receptor: ");
-				int idReceptor = keyboard.nextInt();
-				
-				if(tipoReceptor.equals("g")) {
-					
-					Gestor gestorBuscado7 = utiles.buscarGestor(idReceptor, gestores);
-					
-					
-					while (gestorBuscado7 == null) {
-						System.out.println("Este gestor no existe, por favor indique otro.");
-						idReceptor = keyboard.nextInt();
-						
-						gestorBuscado7 = utiles.buscarGestor(idReceptor, gestores);
-					}
-				}else {
-					
-					Cliente clienteBuscado5 = utiles.buscarCliente(idReceptor, clientes);
-					
-					
-					while (clienteBuscado5 == null) {
-						System.out.println("Este cliente no existe, por favor indique otro.");
-						idReceptor = keyboard.nextInt();
-						
-						clienteBuscado5 = utiles.buscarCliente(idReceptor, clientes);
-					}
-				}
-				
-				//System.out.println("Escriba el mensaje asociado a la transferencia: ");
-				//String textoMensaje = keyboard.nextLine();
-								
-				Mensaje m1 = new Mensaje(idMensaje, tipoEmisor.charAt(0), idEmisor, tipoReceptor.charAt(0), idReceptor, "Sustituir por un mensaje de verdad");
+				Mensaje m1 = new Mensaje(idMensaje, ((String) tipoEmisor).charAt(0), (int)idEmisor, ((String) tipoReceptor).charAt(0), (int)idReceptor, "Sustituir por un mensaje de verdad");
 				mensajes.put(idMensaje, m1);
 				
 				System.out.println("Mensaje creado correctamente\n");
@@ -505,12 +402,67 @@ public class ConsolaBanco {
 			break;
 				
 			case 15:
+				
+				System.out.println("Indique el id de la transferencia a buscar: ");
+				int idTransferenciaBuscada = keyboard.nextInt();
+				
+				
+				Transferencia transferenciaBuscada = utiles.buscarTransferencia(idTransferenciaBuscada, transferencias);
+					
+
+				while (transferenciaBuscada == null) {
+					System.out.println("Este mensaje no existe, por favor indique otro.");
+					idMensajeBuscado = keyboard.nextInt();
+					
+					mensajeBuscado12 = utiles.buscarMensaje(idMensajeBuscado, mensajes);
+				}
+				
+				System.out.println(mensajeBuscado12.toString());
 			break;
 				
 			case 16:
+				
+				if(transferencias.isEmpty()) {
+					System.out.println("No hay ningúna transferencia todavía");
+					break;
+				}
+				
+				transferencias.forEach((idx, Transferencia) -> {
+					System.out.println("\nTransferencia: \n");
+					System.out.println(Transferencia.toString());
+				});
+				
 			break;
 				
 			case 17:
+				
+
+				System.out.println("Establezca el id de la transferencia: ");
+				int idMensajeTransfer = keyboard.nextInt();
+				
+				Transferencia transferExiste = utiles.buscarTransferencia(idMensajeTransfer, transferencias);
+				
+				while(transferExiste!= null) {
+					System.out.println("El Id ya existe, ingrese otro por favor");
+					idMensajeTransfer = keyboard.nextInt();
+					transferExiste= utiles.buscarTransferencia(idMensajeTransfer, transferencias);
+				}
+				
+				HashMap<String, Object> propiedadesTransfer = crearMsg();
+				
+				System.out.println("Ingrese la cantidad de dinero a transferir");
+				int dinero = keyboard.nextInt();
+				
+				Object tipoEmisor2 = propiedadesTransfer.get("tipoEmisor");
+				Object idEmisor2 = propiedadesTransfer.get("idEmisor");
+				Object tipoReceptor2 = propiedadesTransfer.get("tipoReceptor");
+				Object idReceptor2 = propiedadesTransfer.get("idReceptor");
+				
+				Transferencia t1 = new Transferencia(idMensajeTransfer, ((String) tipoEmisor2).charAt(0), (int)idEmisor2, ((String) tipoReceptor2).charAt(0), (int)idReceptor2, "Sustituir por un mensaje de verdad", dinero);
+				transferencias.put(idMensajeTransfer, t1);
+				
+				System.out.println("Transferencia realizada correctamente\n");
+				
 			break;
 				
 			case 18:
@@ -581,5 +533,136 @@ public class ConsolaBanco {
 		 
 	}
 	
+	private static HashMap<String, Object> crearMsg() {
+		
+		Scanner keyboard = new Scanner(System.in);
+		
+		HashMap<String, Object> propiedades = new HashMap<>();
+		
+			
+						
+		System.out.println("Establezca el tipo de emisor (\"c\" para cliente o \"g\" para gestor): ");
+		String tipoEmisor = keyboard.next();
+		
+		
+		
+		boolean tipoEmisorCorrect = false;
+		
+		if (tipoEmisor.equals("g")) {
+			tipoEmisorCorrect = true;
+		}
+		if (tipoEmisor.equals("c")) {
+			tipoEmisorCorrect = true;
+		}				
+		
+		while(tipoEmisorCorrect == false) {
+			
+			System.out.println("El tipo de emisor tiene que ser \"c\" para cliente o \"g\" para gestor, ingreselo de nuevo");
+			tipoEmisor = keyboard.next();
+			
+			if (tipoEmisor.equals("g")) {
+				tipoEmisorCorrect = true;
+			}
+			if (tipoEmisor.equals("c")) {
+				tipoEmisorCorrect = true;
+			}
+		}
+		propiedades.put("tipoEmisor", tipoEmisor);	
+		
+		System.out.println("Establezca el id del emisor: ");
+		int idEmisor = keyboard.nextInt();
+		
+		if(tipoEmisor.equals("g")) {
+			
+			Gestor gestorBuscado6 = utiles.buscarGestor(idEmisor, gestores);
+			
+			
+			while (gestorBuscado6 == null) {
+				System.out.println("Este gestor no existe, por favor indique otro.");
+				idEmisor = keyboard.nextInt();
+				
+				gestorBuscado6 = utiles.buscarGestor(idEmisor, gestores);
+			}
+		}else {
+			
+			Cliente clienteBuscado4 = utiles.buscarCliente(idEmisor, clientes);
+			
+			
+			while (clienteBuscado4 == null) {
+				System.out.println("Este cliente no existe, por favor indique otro.");
+				idEmisor = keyboard.nextInt();
+				
+				clienteBuscado4 = utiles.buscarCliente(idEmisor, clientes);
+			}
+			
+		}
+		
+		propiedades.put("idEmisor", idEmisor);	
+		
+
+		System.out.println("Establezca el tipo de receptor (\"c\" para cliente y \"g\" para gestor): ");
+		String tipoReceptor = keyboard.next();
+		
+		boolean tipoReceptorCorrect = false;
+		
+		if (tipoReceptor.equals("g")) {
+			tipoReceptorCorrect = true;
+		}
+		if (tipoReceptor.equals("c")) {
+			tipoReceptorCorrect = true;
+		}
+		
+		
+		while(tipoReceptorCorrect == false) {
+			
+			System.out.println("El tipo de receptor tiene que ser \"c\" para cliente o \"g\" para gestor, ingreselo de nuevo");
+			tipoReceptor = keyboard.next();
+			
+			if (tipoReceptor.equals("g")) {
+				tipoReceptorCorrect = true;
+			}
+			if (tipoReceptor.equals("c")) {
+				tipoReceptorCorrect = true;
+			}
+		}
+		
+		propiedades.put("tipoReceptor", tipoReceptor);	
+		
+		System.out.println("Establezca el id del receptor: ");
+		int idReceptor = keyboard.nextInt();
+		
+		if(tipoReceptor.equals("g")) {
+			
+			Gestor gestorBuscado7 = utiles.buscarGestor(idReceptor, gestores);
+			
+			
+			while (gestorBuscado7 == null) {
+				System.out.println("Este gestor no existe, por favor indique otro.");
+				idReceptor = keyboard.nextInt();
+				
+				gestorBuscado7 = utiles.buscarGestor(idReceptor, gestores);
+			}
+		}else {
+			
+			Cliente clienteBuscado5 = utiles.buscarCliente(idReceptor, clientes);
+			
+			
+			while (clienteBuscado5 == null) {
+				System.out.println("Este cliente no existe, por favor indique otro.");
+				idReceptor = keyboard.nextInt();
+				
+				clienteBuscado5 = utiles.buscarCliente(idReceptor, clientes);
+			}
+		}
+		
+		propiedades.put("idReceptor", idReceptor);	
+		
+		//System.out.println("Escriba el mensaje asociado a la transferencia: ");
+		//String textoMensaje = keyboard.nextLine();
+		
+		return propiedades;
+		
+		
+	}
 	
 }
