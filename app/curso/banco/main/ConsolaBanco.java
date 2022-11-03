@@ -18,7 +18,6 @@ public class ConsolaBanco {
 
 	public static void main(String[] args) {
 		
-			
 		
 		String[] nombres = utiles.NOMBRES;
 		String[] apellidos = utiles.APELLIDOS;
@@ -389,12 +388,13 @@ public class ConsolaBanco {
 				
 				HashMap<String, Object> propiedades = crearMsg();
 				
-				Object tipoEmisor = propiedades.get("tipoEmisor");
-				Object idEmisor = propiedades.get("idEmisor");
-				Object tipoReceptor = propiedades.get("tipoReceptor");
-				Object idReceptor = propiedades.get("idReceptor");
+				char tipoEmisor = ((String) propiedades.get("tipoEmisor")).charAt(0);
+				int idEmisor = (int)propiedades.get("idEmisor");
+				char tipoReceptor = ((String)propiedades.get("tipoReceptor")).charAt(0);
+				int idReceptor = (int)propiedades.get("idReceptor");
+				String textoMensaje = propiedades.get("textoMensaje").toString();
 				
-				Mensaje m1 = new Mensaje(idMensaje, ((String) tipoEmisor).charAt(0), (int)idEmisor, ((String) tipoReceptor).charAt(0), (int)idReceptor, "Sustituir por un mensaje de verdad");
+				Mensaje m1 = new Mensaje(idMensaje, tipoEmisor, idEmisor, tipoReceptor, idReceptor, textoMensaje);
 				mensajes.put(idMensaje, m1);
 				
 				System.out.println("Mensaje creado correctamente\n");
@@ -454,11 +454,12 @@ public class ConsolaBanco {
 				int dinero = keyboard.nextInt();
 				
 				Object tipoEmisor2 = propiedadesTransfer.get("tipoEmisor");
-				Object idEmisor2 = propiedadesTransfer.get("idEmisor");
+				int idEmisor2 = (int)propiedadesTransfer.get("idEmisor");
 				Object tipoReceptor2 = propiedadesTransfer.get("tipoReceptor");
-				Object idReceptor2 = propiedadesTransfer.get("idReceptor");
+				int idReceptor2 = (int)propiedadesTransfer.get("idReceptor");
+				String textoMensaje2 = propiedadesTransfer.get("textoMensaje").toString();
 				
-				Transferencia t1 = new Transferencia(idMensajeTransfer, ((String) tipoEmisor2).charAt(0), (int)idEmisor2, ((String) tipoReceptor2).charAt(0), (int)idReceptor2, "Sustituir por un mensaje de verdad", dinero);
+				Transferencia t1 = new Transferencia(idMensajeTransfer, ((String)tipoEmisor2).charAt(0), idEmisor2, ((String)tipoReceptor2).charAt(0), idReceptor2, textoMensaje2, dinero);
 				if(tipoReceptor2.equals("c")) {
 					Cliente clienteTransferencia = utiles.buscarCliente((int)idReceptor2, clientes);
 					clienteTransferencia.ingresarDinero(dinero);
@@ -538,16 +539,21 @@ public class ConsolaBanco {
 			default:
 			System.out.println("ERROR: Debes pulsar un número entre el 1 y el 19.");
 				}	
-			}while (opcion != 0);
-		
-		 
+			}while (opcion != 0);		 
 	}
+	
+	
 	
 	private static HashMap<String, Object> crearMsg() {
 		
 		Scanner keyboard = new Scanner(System.in);
 		
 		HashMap<String, Object> propiedades = new HashMap<>();
+		
+		System.out.println("Escriba el mensaje asociado a la transferencia: ");
+		String textoMensaje = keyboard.nextLine();
+		propiedades.put("textoMensaje", textoMensaje);	
+		
 		
 			
 						
@@ -667,8 +673,9 @@ public class ConsolaBanco {
 		
 		propiedades.put("idReceptor", idReceptor);	
 		
-		//System.out.println("Escriba el mensaje asociado a la transferencia: ");
-		//String textoMensaje = keyboard.nextLine();
+		
+		
+		
 		
 		return propiedades;
 		
