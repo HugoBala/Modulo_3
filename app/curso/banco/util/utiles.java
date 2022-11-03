@@ -1,7 +1,6 @@
 package app.curso.banco.util;
 
 import java.util.HashMap;
-import java.util.Scanner;
 
 import app.curso.banco.entidad.Cliente;
 import app.curso.banco.entidad.Gestor;
@@ -36,7 +35,8 @@ public class utiles{
 			"16. Obtención de todas las trasferencias",
 			"17. Envío de una transferencia.",
 			"18. Registro",
-			"19. Login"
+			"19. Login",
+			"20. Salir"
 	};
 	
 

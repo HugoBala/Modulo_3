@@ -459,6 +459,14 @@ public class ConsolaBanco {
 				Object idReceptor2 = propiedadesTransfer.get("idReceptor");
 				
 				Transferencia t1 = new Transferencia(idMensajeTransfer, ((String) tipoEmisor2).charAt(0), (int)idEmisor2, ((String) tipoReceptor2).charAt(0), (int)idReceptor2, "Sustituir por un mensaje de verdad", dinero);
+				if(tipoReceptor2.equals("c")) {
+					Cliente clienteTransferencia = utiles.buscarCliente((int)idReceptor2, clientes);
+					clienteTransferencia.ingresarDinero(dinero);
+				}
+				if(tipoEmisor2.equals("c")) {
+					Cliente clienteTransferencia = utiles.buscarCliente((int)idEmisor2, clientes);
+					clienteTransferencia.retirarDinero(dinero);
+				}
 				transferencias.put(idMensajeTransfer, t1);
 				
 				System.out.println("Transferencia realizada correctamente\n");
@@ -525,8 +533,10 @@ public class ConsolaBanco {
 				}
 				
 			break;
-			
-			
+			case 20:
+				keyboard.close();
+			default:
+			System.out.println("ERROR: Debes pulsar un número entre el 1 y el 19.");
 				}	
 			}while (opcion != 0);
 		
